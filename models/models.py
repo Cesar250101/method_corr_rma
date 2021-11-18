@@ -15,8 +15,8 @@ class Reparacion(models.Model):
 
         numero=int(numero)+1
         numero_completo=nombre+('00000' + str(numero))[-5:]
-        secuencia=self.env['ir.sequence'].search([('code','=','mrp.repair')],limit=1)
-        secuencia.number_next_actual=numero+1
+        secuencia=self.env['ir.sequence'].sudo().search([('code','=','mrp.repair')],limit=1)
+        secuencia.sudo().number_next_actual=numero+1
         values['name']= numero_completo
         override_create = super(Reparacion,self).create(values)
         new_object = self.env['mrp.repair'].browse(override_create.id)
